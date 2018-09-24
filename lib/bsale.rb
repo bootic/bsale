@@ -25,8 +25,9 @@ module Bsale
     JSON_MIME = 'application/json'.freeze
     BASE_URL = 'https://api.bsale.cl/v1'.freeze
 
-    def initialize(token)
+    def initialize(token, base_url: BASE_URL)
       @token = token
+      @base_url = base_url
     end
 
     def get(path)
@@ -50,7 +51,7 @@ module Bsale
     end
 
     def request(path, method: Net::HTTP::Get, &block)
-      url = path.to_s =~ /^http/ ? path : [BASE_URL, path].join('/')
+      url = path.to_s =~ /^http/ ? path : [base_url, path].join('/')
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -68,5 +69,8 @@ module Bsale
         client: self,
       )
     end
+
+    private
+    attr_reader :base_url
   end
 end
