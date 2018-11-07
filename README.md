@@ -31,7 +31,7 @@ products.to_h # full hash resource
 products.items # [<Bsale::Entity...>, <Bsale::Entity ..>]
 products.items.map(&:id) # [1,2,3, etc]
 # follow hrefs, makes new GET request
-product = products.items.follow
+product = products.items.first.follow
 product.id # 1
 new_product = client.post('products', name: 'new product')
 r = client.delete(product.href)
